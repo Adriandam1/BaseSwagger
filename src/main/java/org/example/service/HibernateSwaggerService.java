@@ -45,19 +45,22 @@ import org.example.model.Persoa;
             }
         }
 
-        // mio en proceso
-        public Persoa borrarPersoa(Persoa persoa, Persoa id) {
+        // Borra la persona con el id pasado por parámetro
+        // Devuelve un string con el mensaje de borrado
+        // borra con el servicio de postgres
+        public String borrarPersoa(String id) {
             try {
                 String url = BASE_URL + "/persoa/{id}";
-                HttpEntity<Persoa> requestEntity = new HttpEntity<>(persoa); // Corpo da solicitude (Persoa)
+                HttpEntity<String> requestEntity = new HttpEntity<>(id); // Corpo da solicitude (Persoa)
 
-                ResponseEntity<Persoa> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Persoa.class);
+                ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class, id);
 
-                return response.getBody();
+                return "persona borrada";
             } catch (HttpClientErrorException e) {
                 System.out.println("Error ao chamar ao endpoint: " + e.getMessage());
                 return null;
             }
+
         }
 
 

@@ -31,9 +31,10 @@ public class RestExample {
         return hibernateSwagger.crearPersoa(persoa);
     }
     // mio en proceso
-    @PostMapping("/borrarPersoaHibernateSwagger")
-    public Persoa actualizarPersoaHibernateSwagger(@RequestBody Persoa persoa) {
-        return hibernateSwagger.borrarPersoa(persoa, persoa);
+    @DeleteMapping("/borrarPersoaHibernateSwagger/{id}")
+    public String borrarPersoaHibernateSwagger(@PathVariable String id) {
+        hibernateSwagger.borrarPersoa(id);
+        return "persoa borrada";
     }
 
     @PostMapping("/saudoSwagger")
