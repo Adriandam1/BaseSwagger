@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.example.model.Persoa;
 
-    @Service
+import java.util.List;
+
+@Service
     public class HibernateSwaggerService {
 
         @Autowired
@@ -51,17 +54,31 @@ import org.example.model.Persoa;
         public String borrarPersoa(String id) {
             try {
                 String url = BASE_URL + "/persoa/{id}";
-                HttpEntity<String> requestEntity = new HttpEntity<>(id); // Corpo da solicitude (Persoa)
+                HttpEntity<String> requestEntity2 = new HttpEntity<>(id); // Corpo da solicitude (Persoa)
 
-                ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class, id);
+                ResponseEntity<String> response2 = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity2, String.class, id);
 
                 return "persona borrada";
+                //return response.getBody();
             } catch (HttpClientErrorException e) {
                 System.out.println("Error ao chamar ao endpoint: " + e.getMessage());
                 return null;
             }
-
         }
+        // Obtiene la personas
+        // Devuelve el response con la lista de personas
+        public List<Persoa> obterPersoasSwagger() {
+            try {
+                String url = BASE_URL + "/persoas";
+                ResponseEntity<List<Persoa>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Persoa>>() {});
+
+                return response.getBody();
+            } catch (HttpClientErrorException e) {
+                System.out.println("Error ao chamar ao endpoint: " + e.getMessage());
+                return null;
+            }
+        }
+
 
 
     }

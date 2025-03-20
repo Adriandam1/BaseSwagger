@@ -30,12 +30,37 @@ public class RestExample {
     public Persoa crearPersoaHibernateSwagger(@RequestBody Persoa persoa) {
         return hibernateSwagger.crearPersoa(persoa);
     }
+
+    @PostMapping("/SolucionExame")
+    public void solucion() {
+
+        Persoa persoa = new Persoa();
+        persoa.setNome("nome");
+        persoa.setIdade(20);
+        hibernateSwagger.crearPersoa(persoa);
+        List<Persoa> persoas = hibernateSwagger.obterPersoasSwagger();
+        for (Persoa p : persoas) {
+            System.out.println(p);
+        }
+    }
+
     // mio en proceso
+
     @DeleteMapping("/borrarPersoaHibernateSwagger/{id}")
     public String borrarPersoaHibernateSwagger(@PathVariable String id) {
         hibernateSwagger.borrarPersoa(id);
         return "persoa borrada";
     }
+
+    // lista as persoas de postgres
+    @GetMapping("/listarPersoas")
+    public List<Persoa> obterPersoasSwagger() {
+      return hibernateSwagger.obterPersoasSwagger();
+    }
+
+
+
+
 
     @PostMapping("/saudoSwagger")
     public String saudoSwagger() {
